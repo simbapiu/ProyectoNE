@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class QuestionsMigration extends Migration
+class SummaryScoreMigration extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class QuestionsMigration extends Migration
      */
     public function up()
     {
-      Schema::create('questions', function (Blueprint $table) {
+      Schema::create('summary_scores', function (Blueprint $table) {
         $table->id();
-        $table->string('sentence');
-        $table->string('type_answer');
-        $table->integer('id_apart');
-        $table->integer('id_answer');
+        $table->integer('id_score');
+        $table->string('recommendations');
+        $table->string('improvements');
+        $table->date('application_date');
+        $table->string('application_place');
         $table->timestamps();
       });
     }
@@ -30,6 +31,6 @@ class QuestionsMigration extends Migration
      */
     public function down()
     {
-      Schema::dropIfExists('questions');
+      Schema::dropIfExists('summary_scores');
     }
 }

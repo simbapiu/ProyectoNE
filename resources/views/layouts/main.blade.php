@@ -14,7 +14,10 @@
             crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
-@include('partials.header')
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <img src="{{ asset('images/escudoYuc.png') }}" style="width: 50px; padding-left: 10px"><a href="/admin"></a>
+    @include('partials.header')
+</nav>
 <div id="layoutSidenav">
     <div id="layoutSidenav_nav">
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -24,15 +27,14 @@
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts"
                        aria-expanded="false" aria-controls="collapseLayouts">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Questionarios
+                        Cuestionarios
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                          data-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/admin/quiz">Ver cuestionarios</a>
-                            <a class="nav-link" href="/admin/quiz/questions">Preguntas</a>
-                            <a class="nav-link" href="/admin/quiz/answers">Respuestas</a>
+                            <a class="nav-link" href="/admin/quizzes">Ver cuestionarios</a>
+                            <a class="nav-link" href="/admin/grades">Ver resultados</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -128,7 +130,7 @@
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2020</div>
+                    <div class="text-muted">Copyright &copy; Poder Judicial 2021</div>
                     <div>
                         <a href="#">Privacy Policy</a>
                         &middot;
@@ -140,14 +142,20 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous">
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
 <script src="{{ asset('/dash/dist/js/scripts.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script src="{{ asset('/dash/dist/assets/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('/dash/dist/assets/demo/chart-bar-demo.js') }}"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js" crossorigin="anonymous"></script>
+<script src="{{ asset('/dash/dist/assets/demo/datatables-demo.js') }}"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-<script src="{{ asset('/dash/dist/assets/demo/datatables-demo.js') }}"></script>
+
 </body>
 </html>
