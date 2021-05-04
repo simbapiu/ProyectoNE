@@ -14,5 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
+});
+
+Route::prefix('/admin')->namespace('App\\Http\\Controllers')-> group (function(){
+  Route::get('/', 'AdminController@index');
+
+  Route::prefix('/quizzes')->namespace('Admin')-> group (function(){
+    Route::get('/', 'QuizController@index');
+    Route::get('/{id}', 'QuizController@show');
+    Route::post('/{id}', 'QuizController@store');
+
+
+    Route::prefix('/{id}')->namespace('Quiz')-> group (function(){
+      Route::resource('questions', 'QuestionController');
+      Route::resource('answers', 'AnswerController');
+    });
+  });
 });
