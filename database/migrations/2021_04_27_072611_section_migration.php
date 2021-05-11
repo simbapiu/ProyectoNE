@@ -15,6 +15,7 @@ class SectionMigration extends Migration
   {
     Schema::create('sections', function (Blueprint $table) {
       $table->id();
+      $table->integer('id_quiz');
       $table->string('description');
       $table->float('percentage');
       $table->timestamps();

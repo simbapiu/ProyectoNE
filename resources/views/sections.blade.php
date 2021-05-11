@@ -5,9 +5,9 @@
 @section('container')
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Cuestionarios</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAgregar">
-            <i class="fas fa-book fa-sm text-white-50"></i> Crear cuestionario
+        <h1 class="h3 mb-0 text-gray-800">Secciones</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAgregarSeccion">
+            <i class="fas fa-book fa-sm text-white-50"></i> Crear sección
         </a>
     </div>
 
@@ -20,13 +20,13 @@
     </div>
     <!-- Modal -->
 
-    <div class="modal fade" id="modalAgregar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalAgregarSeccion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Agregar cuestionario</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar Sección</h5>
                 </div>
-                <form method="post" action="/admin/quizzes">
+                <form method="post" action="/admin/quizzes/{{ $id }}/sections">
                     @csrf
                     <div class="modal-body">
                         @if($message = Session::get('ErrorInsert'))
@@ -44,10 +44,6 @@
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Descripción</label>
                             <textarea class="form-control" required name="description" id="recipient-description" placeholder="Ingresa una breve descripción.">{{ old('description') }}</textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Periodo:</label>
-                            <input type="text" name="period" required class="form-control" id="recipient-period" placeholder="Ingrese un año. Ej. 2021" value="{{ old('period') }}">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -67,20 +63,16 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Descripción</th>
-                <th scope="col">Inicio de periodo</th>
-                <th scope="col">Fin de periodo</th>
                 <th scope="col">Acciones</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($quizzes as $quiz)
+            @foreach($sections as $section)
                 <tr>
-                    <th scope="row">{{ $quiz->id }}</th>
-                    <td>{{ $quiz->description }}</td>
-                    <td>{{ $quiz->start_period }}</td>
-                    <td>{{ $quiz->end_period }}</td>
+                    <th scope="row">{{ $section->id }}</th>
+                    <td>{{ $section->description }}</td>
                     <td>
-                        <a href="quizzes/{{ $quiz->id }}">
+                        <a href="quizzes/{{ $section->id }}">
                             <i class="fas fa-eye fa-sm text-black-50"></i>
                         </a>
                         <span style="padding-left: 10px"></span>
@@ -103,7 +95,7 @@
     <script>
         $(document).ready(function () {
             @if($message = Session::get('ErrorInsert'))
-            $("#modalAgregar").modal("show");
+            $("#modalAgregarSeccion").modal("show");
             @endif
         });
     </script>

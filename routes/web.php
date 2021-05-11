@@ -20,15 +20,17 @@ Route::get('/', function () {
 Route::prefix('/admin')->namespace('App\\Http\\Controllers')-> group (function(){
   Route::get('/', 'AdminController@index');
 
-  Route::prefix('/quizzes')->namespace('Admin')-> group (function(){
-    Route::get('/', 'QuizController@index');
-    Route::get('/{id}', 'QuizController@show');
-    Route::post('/{id}', 'QuizController@store');
+  Route::prefix('/')->namespace('Admin')-> group (function(){
+    Route::resource('quizzes', 'QuizController');
+    //Route::get('/', 'QuizController@index');
+    //Route::get('/{id}', 'QuizController@show');
+    //Route::post('/{id}', 'QuizController@store');
 
 
-    Route::prefix('/{id}')->namespace('Quiz')-> group (function(){
+    Route::prefix('quizzes/{id}')->namespace('Quiz')-> group (function(){
       Route::resource('questions', 'QuestionController');
       Route::resource('answers', 'AnswerController');
+      Route::resource('sections', 'SectionController');
     });
   });
 });

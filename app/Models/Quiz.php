@@ -10,6 +10,6 @@ class Quiz extends Model
   use HasFactory;
 
   protected $fillable = [
-    'area', 'start_period', 'end_period'
+    'description', 'start_period', 'end_period'
   ];
 }
