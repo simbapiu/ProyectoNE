@@ -15,7 +15,7 @@ class QuizMigration extends Migration
   {
     Schema::create('quizzes', function (Blueprint $table) {
       $table->id();
-      $table->string('area');
+      $table->string('description');
       $table->date('start_period');
       $table->date('end_period');
       $table->timestamps();
