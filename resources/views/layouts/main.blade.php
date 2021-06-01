@@ -16,7 +16,9 @@
 </head>
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <img src="{{ asset('images/escudoYuc.png') }}" style="width: 50px; padding-left: 10px"><a href="/admin"></a>
+    <div class="logo-yuc">
+        <img src="{{ asset('images/escudoYuc.png') }}" style="width: 50px; padding-left: 10px" class="logo-yuc"><a href="/admin"></a>
+    </div>
     @include('partials.header')
 </nav>
 <div id="layoutSidenav">
@@ -76,29 +78,18 @@
                             </div>
                         </nav>
                     </div>
-                    <div class="sb-sidenav-menu-heading">Addons</div>
-                    <a class="nav-link" href="charts.html">
-                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                        Charts
-                    </a>
-                    <a class="nav-link" href="tables.html">
-                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Tables
-                    </a>
                 </div>
             </div>
             <div class="sb-sidenav-footer">
-                <div class="small">Logged in as:</div>
-                Start Bootstrap
+                <div class="small">Logueado como:</div>
+                Ejemplo
             </div>
         </nav>
     </div>
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
+                <br>
                 @yield('container')
                 <!-- charts
                 <div class="row">

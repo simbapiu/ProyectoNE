@@ -1,17 +1,23 @@
-<a class="navbar-brand" href="/admin">Panel Admin</a>
+<div class="title-header">
+    <a class="navbar-brand" href="/admin">Panel Admin</a>
+</div>
 <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i>
 </button>
-<img src="{{ asset('images/logoPJY.png') }}" style="width: 300px; margin: 0 auto">
+<div class="pjy-logo">
+    <img src="{{ asset('images/logoPJY.png') }}"><a href="/admin"></a>
+</div>
 <!-- Navbar Search-->
-<form class="d-none d-md-inline-block form-inline ml-md-3 mr-0 mr-md-3 my-2 my-md-0">
-    <div class="input-group">
-        <input class="form-control" type="text" placeholder="Search for..." aria-label="Search"
-               aria-describedby="basic-addon2"/>
-        <div class="input-group-append">
-            <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+<div class="form-search">
+    <form class="d-none d-md-inline-block form-inline ml-md-3 mr-0 mr-md-3 my-2 my-md-0">
+        <div class="input-group">
+            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search"
+                   aria-describedby="basic-addon2"/>
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" style="background-color: #2F4F4F; border-color: #2F4F4F;"><i class="fas fa-search"></i></button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 <!-- Navbar-->
 <ul class="navbar-nav ml-auto ml-md-0">
     <li class="nav-item dropdown">

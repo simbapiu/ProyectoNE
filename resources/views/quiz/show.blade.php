@@ -2,10 +2,7 @@
 @section('container')
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Cuestionario {{ $id }}</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAgregarSeccion">
-            <i class="fas fa-book fa-sm text-white-50"></i> Agregar sección
-        </a>
+        <h1 class="h3 mb-0 text-gray-800">Cuestionario {{ $year }}</h1>
     </div>
 
     <!-- Modal secciones -->
@@ -165,79 +162,26 @@
 
     <br>
 
-    @foreach($sections as $section)
-        <div class="card">
-            <div class="card-header">
-                {{ $loop->index + 1}}. <b>{{ $section->description }}</b>
-                <input type="hidden" id="section_id" value="{{ $section->id }}">
-            </div>
-            @if($questions = \DB::table('questions')
-            ->select('questions.*')
-            ->get())
-                @foreach($questions as $question)
-                    <div class="card-body">
-                        <p class="card-text">{{ $loop->index + 1}}. {{ $question->sentence }}</p>
-                        <div class="row">
-                            @if($option = \DB::table('options')->where('id', $question->id_option)
-                                ->select('options.*')
-                                ->orderBy('id','DESC')
-                                ->first())
-                                <div class="card-body">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                        <label class="form-check-label" for="inlineRadio1">{{ $option->first_option }}</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">{{ $option->second_option }}</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">{{ $option->third_option }}</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">{{ $option->fourth_option }}</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">{{ $option->fifth_option }}</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">{{ $option->default_option }}</label>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                @endforeach
-            @endif
-            <div class="card-footer">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAgregarPregunta" id="addPregunta">
-                        <i class="fas fa-book fa-sm text-white-50"></i> Agregar pregunta
-                    </a>
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card text-white mb-4" style="background-color: #2F4F4F">
+                <div class="card-body">Secciones</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="{{ $id }}/sections">Ver</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
         </div>
-    @endforeach
+    </div>
 
-    <!--
-    <td>
-        <a href="quizzes/{ //$quiz->id }}">
-            <i class="fas fa-eye fa-sm text-black-50"></i>
-        </a>
-        <span style="padding-left: 10px"></span>
-        <a href="#" data-bs-toggle="modal" data-bs-target="#modalAgregar">
-            <i class="fas fa-pencil-alt fa-sm text-black-50"></i>
-        </a>
-        <span style="padding-left: 10px"></span>
-        <a href="#">
-            <i class="fas fa-trash fa-sm text-black-50"></i>
-        </a>
-    </td>
-    -->
+    <br>
+
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <h3> Descripción: </h3>
+            <span>{{ $quiz->value('description') }}</span>
+        </div>
+    </div>
 
 @endsection
 

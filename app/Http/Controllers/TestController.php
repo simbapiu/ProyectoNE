@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Quiz;
+use App\Http\Controllers\Controller;
+use Carbon\Traits\Date;
+use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Section;
 
 class TestController extends Controller
-{
-    /**
+{   /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+      return view('test');
     }
 
     /**
