@@ -17,20 +17,24 @@ Route::get('/', function () {
   return view('welcome');
 });
 
+Route::prefix('/user')->namespace('App\\Http\\Controllers')-> group (function(){
+  Route::resource('/evaluation', 'TestController');
+});
+
 Route::prefix('/admin')->namespace('App\\Http\\Controllers')-> group (function(){
   Route::get('/', 'AdminController@index');
 
   Route::prefix('/')->namespace('Admin')-> group (function(){
     Route::resource('quizzes', 'QuizController');
-    //Route::get('/', 'QuizController@index');
-    //Route::get('/{id}', 'QuizController@show');
-    //Route::post('/{id}', 'QuizController@store');
 
 
-    Route::prefix('quizzes/{id}')->namespace('Quiz')-> group (function(){
-      Route::resource('questions', 'QuestionController');
-      Route::resource('answers', 'AnswerController');
-      Route::resource('sections', 'SectionController');
+    Route::prefix('quizzes/{id_quiz}')->namespace('Quiz')-> group (function() {
+      Route::resource('sections', 'SectionController', ['except' => ['index']]);
+      Route::get('/sections', ['as' => 'sections.index', 'uses' => 'SectionController@index']);
+
+      Route::prefix('/sections/{id_section}')->namespace('Section')->group(function (){
+        Route::resource('questions', 'QuestionController');
+      });
     });
   });
 });

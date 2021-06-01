@@ -22,13 +22,18 @@ class QuizController extends Controller
   }
 
   public function show($id) {
+    $quiz = Quiz::find($id);
+    $start_period = $quiz->value('start_period');
+    $date = new Carbon($start_period);
+    $year = $date->year;
     $sections = \DB::table('sections')
       ->select('sections.*')
       ->orderBy('id','DESC')
       ->get();
     return view('quiz.show')
       ->with('id', $id)
-      ->with('sections', $sections);
+      ->with('year', $year)
+      ->with('quiz', $quiz);
   }
 
   public function store(Request $request) {
@@ -46,7 +51,7 @@ class QuizController extends Controller
       $period = $request->period;
       $start_period = new Carbon ("{$period}-01-01");
       $end_period = new Carbon ("{$period}-12-31");
-      $quiz = Quiz::create([
+      Quiz::create([
         'description' => $request->description,
         'start_period' => $start_period,
         'end_period' => $end_period

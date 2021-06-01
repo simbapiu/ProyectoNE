@@ -10132,7 +10132,7 @@ body {
   z-index: 1039;
 }
 .sb-topnav .navbar-brand {
-  width: 225px;
+  width: 145px;
   padding-left: 1rem;
   padding-right: 1rem;
   margin: 0;
@@ -10246,4 +10246,32 @@ body {
 }
 .sb-sidenav-light .sb-sidenav-footer {
   background-color: #e9ecef;
+}
+
+.pjy-logo {
+  margin: 0 auto;
+}
+
+.pjy-logo img {
+  width: 300px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1000px) {
+  .logo-yuc {
+    display: none;
+  }
+
+  .title-header {
+    display: none;
+  }
+
+  .form-search {
+    display: none;
+  }
+
+  .pjy-logo img{
+    width: 200px;
+    margin: 0 15px;
+  }
 }

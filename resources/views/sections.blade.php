@@ -6,8 +6,8 @@
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Secciones</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAgregarSeccion">
-            <i class="fas fa-book fa-sm text-white-50"></i> Crear sección
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAgregarSeccion" style="background-color: #2F4F4F; border-color: #2F4F4F">
+            <i class="fas fa-book fa-sm text-white-50"></i> Agregar sección
         </a>
     </div>
 
@@ -26,7 +26,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Agregar Sección</h5>
                 </div>
-                <form method="post" action="/admin/quizzes/{{ $id }}/sections">
+                <form method="post" action="/admin/quizzes/{{ $id_quiz }}/sections">
                     @csrf
                     <div class="modal-body">
                         @if($message = Session::get('ErrorInsert'))
@@ -62,6 +62,7 @@
             <thead>
             <tr>
                 <th scope="col">ID</th>
+                <th scope="col"># Sección</th>
                 <th scope="col">Descripción</th>
                 <th scope="col">Acciones</th>
             </tr>
@@ -70,9 +71,10 @@
             @foreach($sections as $section)
                 <tr>
                     <th scope="row">{{ $section->id }}</th>
+                    <td>{{ $loop->index + 1}}</td>
                     <td>{{ $section->description }}</td>
                     <td>
-                        <a href="quizzes/{{ $section->id }}">
+                        <a href="sections/{{ $section->id }}">
                             <i class="fas fa-eye fa-sm text-black-50"></i>
                         </a>
                         <span style="padding-left: 10px"></span>

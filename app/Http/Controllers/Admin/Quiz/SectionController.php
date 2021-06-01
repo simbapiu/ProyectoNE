@@ -10,16 +10,21 @@ use App\Models\Section;
 
 class SectionController extends Controller
 {
-  public function index() {
-    $sections = \DB::table('sections')
+  public function index($id_quiz) {
+    $sections = Section::Where('id_quiz', $id_quiz)
       ->select('sections.*')
-      ->orderBy('id','DESC')
+      ->orderBy('id','ASC')
       ->get();
-    return view('sections')->with('sections', $sections);
+    return view('sections')
+      ->with('id_quiz', $id_quiz)
+      ->with('sections', $sections);
   }
 
-  public function show($id) {
-    return view('sections.show')->with('id', $id);
+  public function show($id_quiz, $id_section) {
+    $section = Section::Where(['id_quiz' => $id_quiz, 'id' => $id_section])->first();
+    return view('sections.show')
+      ->with('id_section', $id_section)
+      ->with('section', $section);
   }
 
   public function store(Request $request) {
@@ -33,12 +38,12 @@ class SectionController extends Controller
         ->withErrors($validator);
     }
     else {
-      $section = Section::create([
+      Section::create([
         'description' => $request->description,
         'id_quiz' => $request->id_quiz,
         'percentage'=>0
       ]);
-      return back()->with('Listo', 'Sección creada correctamente');
+      return back()->with('Listo', 'Sección agregada correctamente');
     }
   }
 }
