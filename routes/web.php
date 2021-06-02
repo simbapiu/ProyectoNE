@@ -26,6 +26,7 @@ Route::prefix('/admin')->namespace('App\\Http\\Controllers')-> group (function()
 
   Route::prefix('/')->namespace('Admin')-> group (function(){
     Route::resource('quizzes', 'QuizController');
+    Route::resource('options', 'OptionController');
 
 
     Route::prefix('quizzes/{id_quiz}')->namespace('Quiz')-> group (function() {
@@ -38,3 +39,6 @@ Route::prefix('/admin')->namespace('App\\Http\\Controllers')-> group (function()
     });
   });
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
