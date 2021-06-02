@@ -14,5 +14,31 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
+
+Route::prefix('/user')->namespace('App\\Http\\Controllers')-> group (function(){
+  Route::resource('/evaluation', 'TestController');
+});
+
+Route::prefix('/admin')->namespace('App\\Http\\Controllers')-> group (function(){
+  Route::get('/', 'AdminController@index');
+
+  Route::prefix('/')->namespace('Admin')-> group (function(){
+    Route::resource('quizzes', 'QuizController');
+    Route::resource('options', 'OptionController');
+
+
+    Route::prefix('quizzes/{id_quiz}')->namespace('Quiz')-> group (function() {
+      Route::resource('sections', 'SectionController', ['except' => ['index']]);
+      Route::get('/sections', ['as' => 'sections.index', 'uses' => 'SectionController@index']);
+
+      Route::prefix('/sections/{id_section}')->namespace('Section')->group(function (){
+        Route::resource('questions', 'QuestionController');
+      });
+    });
+  });
+});
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
