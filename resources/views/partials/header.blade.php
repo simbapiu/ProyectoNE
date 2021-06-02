@@ -24,8 +24,11 @@
         <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            @yield('navBar')
-            <a class="dropdown-item" href="login.html">Cerrar sesión</a>
+            @if(Auth::User()->role == 'admin')
+                <a class="dropdown-item" href="#">Ajustes</a>
+                <div class="dropdown-divider"></div>
+            @endif
+            <a class="dropdown-item" href="login">Cerrar sesión</a>
         </div>
     </li>
 </ul>

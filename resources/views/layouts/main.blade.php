@@ -37,6 +37,7 @@
                          data-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="/admin/quizzes">Ver cuestionarios</a>
+                            <a class="nav-link" href="/admin/options">Ver las opciones para respuestas</a>
                             <a class="nav-link" href="/admin/grades">Ver resultados</a>
                         </nav>
                     </div>
@@ -82,7 +83,7 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Logueado como:</div>
-                Ejemplo
+                {{ Auth::User()->name }}
             </div>
         </nav>
     </div>
