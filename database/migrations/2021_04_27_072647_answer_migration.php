@@ -17,7 +17,7 @@ class AnswerMigration extends Migration
       $table->id();
       $table->integer('id_question');
       $table->string('selected_answer');
-      $table->float('value');
+      $table->float('answer_value');
       $table->timestamps();
     });
   }

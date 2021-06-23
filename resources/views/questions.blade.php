@@ -52,6 +52,63 @@
         </div>
     </div>
 
+    <!-- Model Eliminar -->
+
+    <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar Pregunta</h5>
+                </div>
+                <div class="modal-body">
+                    <h5>¿Desea eliminar la pregunta?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger btnModalEliminar">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar -->
+
+    <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar pregunta</h5>
+                </div>
+                <form method="post" action="/admin/quizzes/{{$id_quiz}}/sections/{{$id_section}}/questions">
+                    @csrf
+                    <div class="modal-body">
+                        @if($message = Session::get('ErrorInsert'))
+                            <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
+                                <h5>Errores:</h5>
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>
+                                            {{ $error }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <input type="hidden" name="id" id="idEdit">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Sentencia:</label>
+                            <input type="text" class="form-control" required name="sentence" id="editSentence" value="{{ old('sentence') }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <br>
 
     <!-- data tables -->
@@ -87,14 +144,18 @@
                                 <td>{{ $loop->index + 1}}</td>
                                 <td>{{ $question->sentence }}</td>
                                 <td>
-                                    <span style="padding-left: 10px"></span>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalAgregar">
-                                        <i class="fas fa-pencil-alt fa-sm text-black-50"></i>
-                                    </a>
-                                    <span style="padding-left: 10px"></span>
-                                    <a href="#">
-                                        <i class="fas fa-trash fa-sm text-black-50"></i>
-                                    </a>
+                                    <button class="btn btn-round btnEditar"
+                                            data-id="{{ $question->id }}"
+                                            data-sentence="{{ $question->sentence }}"
+                                            data-bs-toggle="modal" data-bs-target="#modalEditar">
+                                        <i class="fas fa-edit fa-sm text-black-50"></i>
+                                    </button>
+                                    <button class="btn btn-round btnEliminar" data-id="{{ $question->id }}" data-bs-toggle="modal" data-bs-target="#modalEliminar"><i class="fas fa-trash fa-sm text-black-50"></i></button>
+                                    <form action="{{ url('/admin/quizzes/'.$id_quiz.'/sections/'.$id_section.'/questions', ['id' => $question->id]) }}" method="post" id="formDel_{{ $question->id }}">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $question->id }}">
+                                        <input type="hidden" name="_method" value="delete">
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -142,10 +203,24 @@
     </script>
 
     <script>
+        var idEliminar = 0;
         $(document).ready(function () {
             @if($message = Session::get('ErrorInsert'))
             $("#modalAgregarPregunta").modal("show");
             @endif
+            @if($message = Session::get('ErrorInsert'))
+            $("#modalEditar").modal("show");
+            @endif
+            $(".btnEliminar").click(function () {
+                idEliminar = $(this).data('id');
+            });
+            $(".btnModalEliminar").click(function () {
+                $('#formDel_'+idEliminar).submit();
+            });
+            $(".btnEditar").click(function () {
+                $('#idEdit').val($(this).data('id'));
+                $('#editSentence').val($(this).data('sentence'));
+            });
         });
     </script>
 @endsection

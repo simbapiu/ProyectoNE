@@ -7,6 +7,7 @@ use Carbon\Traits\Creator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Section;
+use App\Models\Question;
 
 class SectionController extends Controller
 {
@@ -38,12 +39,32 @@ class SectionController extends Controller
         ->withErrors($validator);
     }
     else {
-      Section::create([
-        'description' => $request->description,
-        'id_quiz' => $request->id_quiz,
-        'percentage'=>0
-      ]);
+      Section::updateOrCreate(
+        ['id' => $request->id],
+        [
+          'description' => $request->description,
+          'id_quiz' => $request->id_quiz,
+          'percentage'=>0
+        ]
+      );
       return back()->with('Listo', 'Sección agregada correctamente');
+    }
+  }
+
+  public function destroy($quiz_id, $id) {
+    $section = Section::find($id);
+    $questions = Question::where('id_section', $id)->get();
+    if (count($questions) > 0) {
+      return back()
+        ->withInput()
+        ->with('ErrorDelete', 'No se puede eliminar: Esta sección contiene preguntas.');
+    }
+    else {
+      $section->delete();
+      return back()
+        ->with('Listo', 'La sección se eliminó correctamente')
+        ->with('id_quiz', $quiz_id)
+        ->with('id_section', $id);
     }
   }
 }

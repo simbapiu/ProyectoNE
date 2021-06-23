@@ -10,6 +10,6 @@ class Answer extends Model
     use HasFactory;
 
     protected $fillable = [
-      'id_question', 'selected_answer', 'value'
+      'id_question', 'selected_answer', 'answer_value', 'selected_value'
     ];
 }
