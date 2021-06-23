@@ -32,13 +32,26 @@ class QuestionController extends Controller
         ->withErrors($validator);
     }
     else {
-      Question::create([
-        'sentence' => $request->sentence,
-        'id_option' => 0,
-        'id_section' => $request->id_section,
-        'percentage'=>0
-      ]);
-      return back()->with('Listo', 'Pregunta agregada correctamente');
+      $question = Question::updateOrCreate(
+        ['id' => $request->id],
+        [
+          'sentence' => $request->sentence,
+          'id_option' => 1,
+          'id_section' => $request->id_section
+        ]
+      );
+      return back()
+        ->with('Listo', 'Pregunta agregada correctamente')
+        ->with('question', $question);
     }
+  }
+
+  public function destroy($quiz_id, $section_id, $id) {
+    $question = Question::find($id);
+    $question->delete();
+    return back()
+      ->with('Listo', 'La pregunta se eliminó correctamente')
+      ->with('id_quiz', $quiz_id)
+      ->with('id_section', $section_id);
   }
 }
