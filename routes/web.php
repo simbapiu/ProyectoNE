@@ -18,7 +18,15 @@ Route::get('/', function () {
 });
 
 Route::prefix('/user')->namespace('App\\Http\\Controllers')-> group (function(){
-  Route::resource('/evaluation', 'TestController');
+  Route::resource('/generalData', 'GeneralDataController');
+  Route::resource('/score', 'ScoreController', ['except' => ['show']]);
+  Route::post('answer/store', 'AnswerController@store')->name('answer.store');
+
+  Route::prefix('/{user_id}')->group(function () {
+    Route::resource('/test', 'TestController', ['except' => ['show']]);
+    Route::get('/test/{test_id}/{year}', ['as' => 'test.show', 'uses' => 'TestController@show']);
+    Route::get('/test/{test_id}/{year}/score', ['as' => 'score.show', 'uses' => 'ScoreController@show']);
+  });
 });
 
 Route::prefix('/admin')->namespace('App\\Http\\Controllers')-> group (function(){
@@ -27,6 +35,8 @@ Route::prefix('/admin')->namespace('App\\Http\\Controllers')-> group (function()
   Route::prefix('/')->namespace('Admin')-> group (function(){
     Route::resource('quizzes', 'QuizController');
     Route::resource('options', 'OptionController');
+    Route::resource('users', 'UserController');
+    Route::get('search/user', 'UserController@search')->name('search.user');
 
 
     Route::prefix('quizzes/{id_quiz}')->namespace('Quiz')-> group (function() {

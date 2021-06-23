@@ -41,18 +41,103 @@
                                 </ul>
                             </div>
                         @endif
+                        @if($message = Session::get('ErrorInsertPeriod'))
+                            <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
+                                <h5>Errores:</h5>
+                                <ul>
+                                    {{ $message }}
+                                </ul>
+                            </div>
+                        @endif
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Descripción</label>
                             <textarea class="form-control" required name="description" id="recipient-description" placeholder="Ingresa una breve descripción.">{{ old('description') }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Periodo:</label>
-                            <input type="text" name="period" required class="form-control" id="recipient-period" placeholder="Ingrese un año. Ej. 2021" value="{{ old('period') }}">
+                            <input type="text" name="period" required class="form-control" id="recipient-period" placeholder="Ingrese un año. Ej. 2020" value="{{ old('period') }}">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Crear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Eliminar -->
+
+    <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar cuestionario</h5>
+                </div>
+                <div class="modal-body">
+                    @if($message = Session::get('ErrorDelete'))
+                        <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
+                            <h5>Errores:</h5>
+                            <ul>
+                                {{ $message }}
+                            </ul>
+                        </div>
+                    @endif
+                    <h5>¿Esta seguro de que desea eliminar el cuestionario?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger btnModalEliminar">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar -->
+
+    <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar cuestionario</h5>
+                </div>
+                <form method="post" action="/admin/quizzes">
+                    @csrf
+                    <div class="modal-body">
+                        @if($message = Session::get('ErrorInsert'))
+                            <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
+                                <h5>Errores:</h5>
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <li>
+                                            {{ $error }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @if($message = Session::get('ErrorInsertPeriod'))
+                            <div class="col-12 alert alert-danger alert-dismissable fade show" role="alert">
+                                <h5>Errores:</h5>
+                                <ul>
+                                    {{ $message }}
+                                </ul>
+                            </div>
+                        @endif
+                        <input type="hidden" name="id" id="idEdit">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Descripción</label>
+                            <textarea class="form-control" required name="description" id="editDescription" placeholder="Ingresa una breve descripción.">{{ old('description') }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Periodo:</label>
+                            <input type="text" name="period" required class="form-control" id="editPeriod" placeholder="Ingrese un año. Ej. 2020" value="{{ old('period') }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -82,17 +167,26 @@
                     <td>{{ $quiz->start_period }}</td>
                     <td>{{ $quiz->end_period }}</td>
                     <td>
-                        <a href="quizzes/{{ $quiz->id }}">
+                        <a href="quizzes/{{ $quiz->id }}" style="padding: 6px 12px; display: inline-block;">
                             <i class="fas fa-eye fa-sm text-black-50"></i>
                         </a>
-                        <span style="padding-left: 10px"></span>
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#modalAgregar">
-                            <i class="fas fa-pencil-alt fa-sm text-black-50"></i>
-                        </a>
-                        <span style="padding-left: 10px"></span>
-                        <a href="#">
+                        @if($year = \Carbon\Carbon::parse($quiz->start_period)->year)
+                            <button class="btn btn-round btnEditar"
+                                    data-id="{{ $quiz->id }}"
+                                    data-description="{{ $quiz->description }}"
+                                    data-period="{{ $year }}"
+                                    data-bs-toggle="modal" data-bs-target="#modalEditar">
+                                <i class="fas fa-edit fa-sm text-black-50"></i>
+                            </button>
+                        @endif
+                        <button class="btn btn-round btnEliminar" data-id="{{ $quiz->id }}" data-bs-toggle="modal" data-bs-target="#modalEliminar">
                             <i class="fas fa-trash fa-sm text-black-50"></i>
-                        </a>
+                        </button>
+                        <form action="{{ url('/admin/quizzes', ['id' => $quiz->id]) }}" method="post" id="formDel_{{ $quiz->id }}">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $quiz->id }}">
+                            <input type="hidden" name="_method" value="delete">
+                        </form>
                     </td>
                 </tr>
             @endforeach
@@ -103,10 +197,32 @@
 
 @section('scripts')
     <script>
+        var idEliminar = 0;
         $(document).ready(function () {
             @if($message = Session::get('ErrorInsert'))
             $("#modalAgregar").modal("show");
             @endif
+            @if($message = Session::get('ErrorInsert'))
+            $("#modalEditar").modal("show");
+            @endif
+            @if($message = Session::get('ErrorDelete'))
+            $("#modalEliminar").modal("show");
+            @endif
+            @if($message = Session::get('ErrorInsertPeriod'))
+            $("#modalAgregar").modal("show");
+            @endif
+            $(".btnEliminar").click(function () {
+                idEliminar = $(this).data('id');
+            });
+            $(".btnModalEliminar").click(function () {
+                $('#formDel_'+idEliminar).submit();
+            });
+            $(".btnEditar").click(function () {
+                $('#idEdit').val($(this).data('id'));
+                $('#editDescription').val($(this).data('description'));
+                $('#editPeriod').val($(this).data('period'));
+            });
+
         });
     </script>
 @endsection

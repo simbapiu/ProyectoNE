@@ -9,7 +9,9 @@ class GeneralData extends Model
 {
   use HasFactory;
 
+  protected $table = 'general_datas';
+
   protected $fillable = [
-    'id_employee_evaluator', 'id_employee_evaluated', 'start_period', 'end_period'
+    'start_period', 'end_period'
   ];
 }
