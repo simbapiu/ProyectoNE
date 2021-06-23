@@ -12,9 +12,17 @@ Ejecutar Xampp:
 - Iniciar apache server
 - Iniciar SQL Server
 
+DB
+- Importar la db "internal_quiz"
+- Correr las migraciones para crear la DB con objetos vacíos
+  - `php artisan migrate`
+
+Ejecutar servidor Laravel
+`php artisan serve`
+
 Abrir el navegador de tu preferencia e ir a la siguiente URL:
 
-`localhost:8000/admin`
+`localhost:8000/login`
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
