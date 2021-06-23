@@ -5,6 +5,7 @@ Para poder ejecutar el proyecto es necesario tener instalado lo siguiente:
 
 - Xampp 8.0.3
 - PHP 8.03
+- Laravel 8.x
 - Editor de código (Sublime, VS code, PHP Storm, Brackets)
 
 Ejecutar Xampp:
